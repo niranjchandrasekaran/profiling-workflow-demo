@@ -1,7 +1,7 @@
-This repository was created from the `cytomining/profiling-template` template repository. The `README.md` of that repository and that of `cytoming/profiling-recipe` contain instructions 
+This repository was created from the `cytomining/profiling-template` template repository. The `README.md` of that repository and that of `cytomining/profiling-recipe` contain instructions 
 - for creating a data repository
 - for welding `profiling-recipe` to the data repository
-- for creating the folder structure and populate them with the necessary files
+- for creating the folder structure and populating them with the necessary files
 - for modifying the `config.yml` file
 - for running the profiling recipe
 
