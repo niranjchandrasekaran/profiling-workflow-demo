@@ -11,6 +11,16 @@ To reproduce the profiles in this repo, clone the repo
 git clone git@github.com:niranjchandrasekaran/profiling-workflow-demo.git
 ```
 
+Install miniconda (we use Anaconda as our package manager. Install Miniconda following the instructions [here](https://docs.conda.io/en/latest/miniconda.html)) and `git-lfs`
+
+Install the conda environment
+
+```
+cd profiling-workflow-demo
+conda env create --force --file environment.yml
+conda activate profiling
+```
+
 and then run the following command
 
 ```bash
