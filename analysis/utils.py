@@ -396,7 +396,7 @@ class PrecisionScores(object):
             )
 
         _truth_matrix = (
-            _truth_matrix.pivot("level_1", "level_0", "value")
+            _truth_matrix.pivot(index="level_1", columns="level_0", values="value")
             .reset_index()
             .set_index("level_1")
         )
@@ -446,11 +446,17 @@ class PrecisionScores(object):
         pandas.DataFrame of average precision values.
         """
 
+        # precision_score = precision_score.set_index("Metadata_sample_id")
+        valid_metrics = (0, "ap", self.feature)
+        precision_score = precision_score.set_index(
+            list(set(precision_score.columns).difference(valid_metrics))
+        )
         _precision_group_df = (
             precision_score.groupby(self.feature)
             .apply(lambda x: np.mean(x))
             .reset_index()
         )
+        _precision_group_df.columns = ("Metadata_broad_sample", "ap")
         return _precision_group_df
 
     @staticmethod
@@ -461,7 +467,7 @@ class PrecisionScores(object):
         -------
         mean average precision score.
         """
-
+        precision_score = precision_score.set_index("Metadata_broad_sample")
         return precision_score.mean().values[0]
 
     def process_negcon(self, _corr_df):
@@ -594,7 +600,9 @@ class PrecisionScores(object):
             )
 
         _corr_df = (
-            _corr_df.pivot("level_1", "level_0", 0).reset_index().set_index("level_1")
+            _corr_df.pivot(index="level_1", columns="level_0", values=0)
+            .reset_index()
+            .set_index("level_1")
         )
         _corr_df.index.name = None
         _corr_df = _corr_df.rename_axis(None, axis=1)
@@ -626,7 +634,7 @@ class PrecisionScores(object):
             )
 
         _corr = (
-            _corr.pivot(columns=("level_1", "level_0", "corr"))
+            _corr.pivot(index="level_1", columns="level_0", values="corr")
             .reset_index()
             .set_index("level_1")
         )
