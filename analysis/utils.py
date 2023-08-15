@@ -448,15 +448,17 @@ class PrecisionScores(object):
 
         # precision_score = precision_score.set_index("Metadata_sample_id")
         valid_metrics = (0, "ap", self.feature)
-        precision_score = precision_score.set_index(
-            list(set(precision_score.columns).difference(valid_metrics))
+        additional_columns = list(
+            set(precision_score.columns).difference(valid_metrics)
         )
+        precision_score = precision_score.set_index(additional_columns)
+
         _precision_group_df = (
             precision_score.groupby(self.feature)
             .apply(lambda x: np.mean(x))
             .reset_index()
         )
-        _precision_group_df.columns = ("Metadata_broad_sample", "ap")
+        _precision_group_df.columns = (self.feature, "ap")
         return _precision_group_df
 
     @staticmethod
@@ -467,7 +469,7 @@ class PrecisionScores(object):
         -------
         mean average precision score.
         """
-        precision_score = precision_score.set_index("Metadata_broad_sample")
+        precision_score = precision_score.set_index(list(precision_score.columns[:-1]))
         return precision_score.mean().values[0]
 
     def process_negcon(self, _corr_df):
