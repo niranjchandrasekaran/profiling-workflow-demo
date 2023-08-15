@@ -2,11 +2,6 @@ import os
 import glob
 import pandas as pd
 import numpy as np
-from sklearn.utils.validation import check_is_fitted
-from sklearn.utils import check_array, as_float_array
-from sklearn.base import TransformerMixin, BaseEstimator
-import kneed
-import scipy
 from sklearn.metrics import average_precision_score
 from sklearn.metrics.pairwise import cosine_similarity
 
